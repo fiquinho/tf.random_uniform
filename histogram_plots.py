@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
+import matplotlib.pylab as pyl
 import tensorflow as tf
-import numpy as np
 
 
 def histograms_x2(tensor1, tensor2):
@@ -23,20 +23,17 @@ def histograms_x2(tensor1, tensor2):
     # Figura número 1
     plt.subplot(121)
     cantidad_valores_por_clase_1, clases_1, patches1 = plt.hist(tensor1)
-    cantidad_máxima_1 = np.max(cantidad_valores_por_clase_1)
     promedio_cantidades = promedio_valores(cantidad_valores_por_clase_1)
-    lista_promedio_cantidades = []
-    for _ in clases_1:
-        lista_promedio_cantidades.append(promedio_cantidades)
-    plt.plot(list(clases_1), lista_promedio_cantidades, '--', linewidth=3)
-    plt.plot((promedio_valores_1, promedio_valores_1), (0, cantidad_máxima_1 * 1.1), 'r-', linewidth=3)
+
+    pyl.axvline(promedio_valores_1, color='r', linewidth=3, linestyle="--")
+    pyl.axhline(promedio_cantidades, color='#db9723', linewidth=3, linestyle="--")
     plt.xlabel('Magnitud de los valores')
     plt.ylabel('Cantidad de valores por clase')
     plt.title('Histograma {} valores'.format(len(tensor1)))
-    plt.text(promedio_valores_1 * 1.05, cantidad_máxima_1,
+    plt.text(promedio_valores_1 * 1.05, max(cantidad_valores_por_clase_1) * .9,
              "Promedio valores \naleatorios creados:\n{}".format(round(promedio_valores_1, 5)),
              bbox={'facecolor': 'red', 'alpha': 0.75, 'pad': 2})
-    plt.text(clases_1[0], promedio_cantidades * 0.75,
+    plt.text(clases_1[0], promedio_cantidades * .8,
              "Promedio de cantidad\nde valores por clase:\n{}".format(promedio_cantidades),
              bbox={'facecolor': 'orange', 'alpha': 0.75, 'pad': 2})
     plt.grid()
@@ -44,17 +41,15 @@ def histograms_x2(tensor1, tensor2):
     # Figura número 2
     plt.subplot(122)
     cantidad_valores_por_clase_2, clases_2, patches2 = plt.hist(tensor2)
-    cantidad_máxima_2 = np.max(cantidad_valores_por_clase_2)
+    cantidad_máxima_2 = max(cantidad_valores_por_clase_2)
     promedio_cantidades = promedio_valores(cantidad_valores_por_clase_2)
-    lista_promedio_cantidades = []
-    for _ in clases_2:
-        lista_promedio_cantidades.append(promedio_cantidades)
-    plt.plot(list(clases_2), lista_promedio_cantidades, '--', linewidth=3)
-    plt.plot((promedio_valores_2, promedio_valores_2), (0, cantidad_máxima_2 * 1.1), 'r-', linewidth=3)
+    pyl.axvline(promedio_valores_2, color='r', linewidth=3, linestyle="--")
+    pyl.axhline(promedio_cantidades, color='#db9723', linewidth=3, linestyle="--")
+
     plt.xlabel('Magnitud de los valores')
     plt.ylabel('Cantidad de valores por clase')
     plt.title('Histograma {} valores'.format(len(tensor2)))
-    plt.text(promedio_valores_2 * 1.05, cantidad_máxima_2,
+    plt.text(promedio_valores_2 * 1.05, cantidad_máxima_2 * .9,
              "Promedio valores \naleatorios creados:\n{}".format(round(promedio_valores_2, 5)),
              bbox={'facecolor': 'red', 'alpha': 0.75, 'pad': 2})
     plt.text(clases_2[0], promedio_cantidades * 0.81,
